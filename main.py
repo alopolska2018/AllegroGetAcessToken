@@ -8,12 +8,12 @@ import keyring
 DEFAULT_OAUTH_URL = 'https://allegro.pl/auth/oauth'
 DEFAULT_REDIRECT_URI = 'http://localhost:8000'
 #
-def get_client_id():
-    client_id = keyring.get_password('client_id', 'czemutaktanio')
+def get_client_id(allegro_login):
+    client_id = keyring.get_password('client_id', allegro_login)
     return client_id
 
-def get_client_secret():
-    client_secret = keyring.get_password('client_secret', 'czemutaktanio')
+def get_client_secret(allegro_login):
+    client_secret = keyring.get_password('client_secret', allegro_login)
     return client_secret
 
 # client_id = '2915d92680534436bea101fa65f06ac7'
@@ -111,12 +111,14 @@ def get_refresh_token(sign_in_response):
     keyring.set_password('refresh_token', 'czemutaktanio', '{}'.format(refresh_token))
     return refresh_token
 
-client_id = get_client_id()
-client_secret = get_client_secret()
-api_key = client_id
-access_code = get_access_code(client_id, api_key)
-sign_in_response = sign_in(client_id, client_secret, access_code, api_key)
-get_access_token(sign_in_response)
-get_refresh_token(sign_in_response)
+if __name__ == "__main__":
+    allegro_login = input("allegro_login: ")
+    client_id = get_client_id(allegro_login)
+    client_secret = get_client_secret(allegro_login)
+    api_key = client_id
+    access_code = get_access_code(client_id, api_key)
+    sign_in_response = sign_in(client_id, client_secret, access_code, api_key)
+    get_access_token(sign_in_response)
+    get_refresh_token(sign_in_response)
 
 
