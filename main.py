@@ -97,18 +97,18 @@ def sign_in(client_id, client_secret, access_code, api_key, redirect_uri=DEFAULT
 
     return reponse_json
 
-def get_access_token(sign_in_response):
+def get_access_token(sign_in_response, allegro_login):
 
     access_token = sign_in_response['access_token']
-    keyring.set_password('access_token', 'czemutaktanio', '{}'.format(access_token))
+    keyring.set_password('access_token', allegro_login, '{}'.format(access_token))
 
     return access_token
 
 
-def get_refresh_token(sign_in_response):
+def get_refresh_token(sign_in_response, allegro_login):
 
     refresh_token = sign_in_response['refresh_token']
-    keyring.set_password('refresh_token', 'czemutaktanio', '{}'.format(refresh_token))
+    keyring.set_password('refresh_token', allegro_login, '{}'.format(refresh_token))
     return refresh_token
 
 if __name__ == "__main__":
@@ -118,7 +118,7 @@ if __name__ == "__main__":
     api_key = client_id
     access_code = get_access_code(client_id, api_key)
     sign_in_response = sign_in(client_id, client_secret, access_code, api_key)
-    get_access_token(sign_in_response)
-    get_refresh_token(sign_in_response)
+    get_access_token(sign_in_response, allegro_login)
+    get_refresh_token(sign_in_response, allegro_login)
 
 
